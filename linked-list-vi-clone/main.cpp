@@ -10,11 +10,49 @@
 
 //  Main function containing command loop.
 int main(int argc, const char * argv[]) {
-    while (true) {
-        char c;
-        std::string line;
+	char c;
+	std::string line;
+
+	while (true) {
         std::cout << std::endl << "Command: ";
         std::cin >> c;
-    }
+		if (c == 'Q') {
+			break;
+		}
+		
+		else if (c == 'D') {
+			std::cout << std::endl << "line: ";
+		}
+		
+		else if (c == 'I') {
+			std::cout << std::endl << "line: ";
+
+		}
+
+		else if (c == 'V')
+		{
+
+		}
+
+		else if (c == 'G')
+		{
+
+		}
+
+		else if (c == 'L')
+		{
+
+		}
+
+		else if (c == 'S')
+		{
+
+		}
+
+		else if (c == 'E')
+		{
+
+		}
+
     return 0;
 }
