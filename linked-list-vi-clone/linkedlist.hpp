@@ -13,7 +13,7 @@
 #include <iostream>
 
 class linkedlist {
-    
+public:
     struct Node {
         std::string data;
         struct Node* next;

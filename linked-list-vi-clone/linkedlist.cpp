@@ -55,16 +55,22 @@ void linkedlist::insert(int index, std::string data) {
 }
 
 void linkedlist::remove(int index) {
-    if (head==NULL) throw std::exception();
+    if (head==NULL) {
+        throw std::exception();
+    }
     if (index==0) {
         removeHead();
         return;
     }
     Node* node = head;
+    Node* prevNode = nullptr;
     for (int i = 0; i < index; i++) {
         if (node->next==NULL) {
             throw std::exception();
         }
+        prevNode = node;
         node = node->next;
     }
+    prevNode->next = node->next;
+    free(node);
 }
