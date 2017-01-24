@@ -24,6 +24,7 @@ class linkedlist {
     void add(std::string data);
     void remove(int index);
     void insert(int index, std::string data);
+    void removeHead();
     Node* get(int index);
 };
 
