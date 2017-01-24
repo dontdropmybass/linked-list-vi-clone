@@ -6,10 +6,15 @@
 //  Copyright © 2017 Alexander Cochrane. All rights reserved.
 //
 
-#include <iostream>
+#include "linkedlist.hpp"
 
+//  Main function containing command loop.
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    while (true) {
+        char c;
+        std::string line;
+        std::cout << std::endl << "Command: ";
+        std::cin >> c;
+    }
     return 0;
 }
