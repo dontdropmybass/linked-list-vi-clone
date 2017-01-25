@@ -84,3 +84,15 @@ void linkedlist::removeHead() {
     head = head->next;
     free(temp);
 }
+
+void linkedlist::replace(int index, std::string data) {
+	if (head == NULL) throw std::exception();
+	Node* node = head;
+	for (int i = 0; i < index; i++) {
+		if (node->next == NULL) {
+			throw std::exception();
+		}
+		node = node->next;
+	}
+	node->data = data;
+}
