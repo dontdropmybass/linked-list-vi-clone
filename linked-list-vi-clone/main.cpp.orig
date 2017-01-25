@@ -11,6 +11,7 @@
 
 //  Main function containing command loop.
 int main(int argc, const char * argv[]) {
+<<<<<<< HEAD
     linkedlist ll;
     std::string filename;
     if (argc <= 1) {
@@ -28,6 +29,7 @@ int main(int argc, const char * argv[]) {
             break;
         }
     }
+=======
 	char c;
 	std::string line;
 
@@ -35,7 +37,7 @@ int main(int argc, const char * argv[]) {
         std::cout << std::endl << "Command: ";
         std::cin >> c;
 		if (c == 'Q') {
-			return 0;
+			break;
 		}
 		
 		else if (c == 'D') {
@@ -72,6 +74,6 @@ int main(int argc, const char * argv[]) {
 
 		}
 
-    }
+>>>>>>> b46749faaa15ff5a6479033d5ba22809afed35f4
     return 0;
 }
