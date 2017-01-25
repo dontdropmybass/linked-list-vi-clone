@@ -42,7 +42,7 @@ void fileloader::saveLinkedListToFile(linkedlist* ll, std::string filename) {
     // output the string to file
     linkedlist::Node* node = ll->head;
     while (true) {
-        ofs << node->data;
+        ofs << node->data << std::endl;
         if (node->next==NULL) {
             break;
         }
