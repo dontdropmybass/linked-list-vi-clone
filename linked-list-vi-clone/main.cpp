@@ -34,16 +34,26 @@ int main(int argc, const char * argv[]) {
 	while (true) {
         std::cout << std::endl << "Command: ";
         std::cin >> c;
+
 		if (c == 'Q') {
 			return 0;
 		}
 		
 		else if (c == 'D') {
 			std::cout << std::endl << "line: ";
+			std::string lineNum;
+			std::cin >> lineNum;
+			ll.remove(std::stoi(lineNum));
 		}
 		
 		else if (c == 'I') {
-			std::cout << std::endl << "line: ";
+			std::cout << std::endl << "Enter New Line Content";
+			std::string NewLine;
+			std::cin >> NewLine;
+			std::cout << std::endl << "line # to insert before";
+			std::string lineNum;
+			std::cin >> lineNum;
+			ll.insert(std::stoi(lineNum), NewLine);
 
 		}
 
@@ -64,12 +74,20 @@ int main(int argc, const char * argv[]) {
 
 		else if (c == 'S')
 		{
+			std::cout << std::endl << "Enter New Line Content";
+			std::string NewLine;
+			std::cin >> NewLine;
+			std::cout << std::endl << "line #";
+			std::string lineNum;
+			std::cin >> lineNum;
+			ll.replace(std::stoi(lineNum), NewLine);
 
 		}
 
 		else if (c == 'E')
 		{
-
+			fileloader::saveLinkedListToFile(&ll,filename);
+			return 0;
 		}
 
     }
