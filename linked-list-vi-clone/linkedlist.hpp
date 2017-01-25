@@ -17,9 +17,10 @@ public:
     struct Node {
         std::string data;
         struct Node* next;
+        Node(const std::string& data, Node* next = NULL) : data(data), next(next) {}
     }*start=NULL;
     
-    struct Node* head;
+    struct Node* head = NULL;
     
     void add(std::string data);
     void remove(int index);

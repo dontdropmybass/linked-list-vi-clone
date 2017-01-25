@@ -12,14 +12,18 @@ void linkedlist::add(std::string data) {
     Node* node;
     
     if (head == NULL) {
-        head = new struct Node;
+        head = new Node(data);
         node = head;
     }
     else {
-        node->next = new struct Node;
-        node = node->next;
+        node = head;
+        while (node->next != NULL) {
+            node = node->next;
+        }
+        Node* newNode = new Node(data);
+        node->next = newNode;
     }
-    node->data = data;
+    
 }
 
 linkedlist::Node* linkedlist::get(int index) {
@@ -73,4 +77,10 @@ void linkedlist::remove(int index) {
     }
     prevNode->next = node->next;
     free(node);
+}
+
+void linkedlist::removeHead() {
+    Node* temp = head;
+    head = head->next;
+    free(temp);
 }
