@@ -1,0 +1,6 @@
+NAME
+	VI Clone: a clone of VI!
+
+SYNOPSIS
+	On Windows: viclone.exe infilename [outfilename]
+	On *NIX (inc. MacOS): mono viclone.exe infilename [4moutfilename]

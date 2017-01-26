@@ -9,6 +9,8 @@
 #include "fileloader.hpp"
 #include "linkedlist.hpp"
 
+void help();
+
 //  Main function containing command loop.
 int main(int argc, const char * argv[]) {
     linkedlist ll;
@@ -33,21 +35,27 @@ int main(int argc, const char * argv[]) {
 
 	while (true) {
         std::cout << std::endl << "Command: ";
-        std::cin >> c;
+        std::string command;
+        getline(std::cin,command);
+        c = command[0];
+        
+        if (c == 'H') {
+            help();
+        }
 
-		if (c == 'Q') {
+		else if (c == 'Q') {
 			return 0;
 		}
 		
 		else if (c == 'D') {
-			std::cout << std::endl << "line: ";
-			int lineNum;
-			std::cin >> lineNum;
+            int lineNum;
+            std::cout << std::endl << "Enter line number: ";
+            std::cin >> lineNum;
 			ll.remove(lineNum);
 		}
 		
 		else if (c == 'I') {
-			std::cout << std::endl << "Enter New Line Content";
+			std::cout << std::endl << "Enter New Line Content:";
 			std::string NewLine;
 			getline(std::cin, NewLine);
 			std::cout << std::endl << "line # to insert before";
@@ -116,9 +124,51 @@ int main(int argc, const char * argv[]) {
 			fileloader::saveLinkedListToFile(&ll,filename);
 			return 0;
 		}
+        
+        else {
+            std::cout << std::endl << "Invalid command." << std::endl;
+        }
 
     }
     return 0;
 }
 
-
+void help() {
+    std::string a[] = {
+        "COMMANDS:",
+        
+        "\n\tH:\n\t\tDisplays help",
+        
+        "\n\tI [linenum]:",
+        "\t\tInsert a new line, to be filled by the user.",
+        "\t\tIf a linenumber is entered after, insert at that line, otherwise insert at the current line.",
+        
+        "\n\tD [startline] [endline]:",
+        "\t\tIf two numbers are entered, delete lines between startline and endline.",
+        "\t\tIf one line is entered, delete that line.",
+        "\t\tOtherwise, delete current line.",
+        
+        "\n\tV:",
+        "\t\tDisplay all lines.",
+        
+        "\n\tG [linenum]:",
+        "\t\tIf a linenum is specified, goto line specified and load into buffer.",
+        "\t\tOtherwise goto the first line and load into buffer.",
+        
+        "\n\tL:",
+        "\t\tDisplays current line of the buffer.",
+        
+        "\n\tS [linenum]:",
+        "\t\tReplaces the specified line, or current line, with user-specified data,",
+        "\t\tthen displays all lines.",
+        
+        "\n\tE:",
+        "\t\tSaves data and exits program.",
+        
+        "\n\tQ:",
+        "\t\tExits without saving."
+    };
+    for (std::string s : a) {
+        std::cout << s << std::endl;
+    }
+}
