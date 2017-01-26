@@ -51,7 +51,13 @@ int main(int argc, const char * argv[]) {
             int lineNum;
             std::cout << std::endl << "Enter line number: ";
             std::cin >> lineNum;
-			ll.remove(lineNum);
+			if (std::cin.fail) {
+				std::cout << std::endl << "Not a valid integer";
+			}
+			else { //turn into else if to say if it isn't greater than the number of nodes
+				ll.remove(lineNum);
+			}
+			
 		}
 		
 		else if (c == 'I') {
@@ -61,8 +67,12 @@ int main(int argc, const char * argv[]) {
 			std::cout << std::endl << "line # to insert before";
 			int lineNum;
 			std::cin >> lineNum;
-			ll.insert(lineNum, NewLine);
-
+			if (std::cin.fail) { //turn into else if to say if it isn't greater than the number of nodes
+				std::cout << std::endl << "Not a valid integer";
+			}
+			else {
+				ll.insert(lineNum, NewLine);
+			}
 		}
 
 		else if (c == 'V')
@@ -82,8 +92,14 @@ int main(int argc, const char * argv[]) {
 		{
 			std::cout << std::endl << "Go to Line #";
             int lineNum;
-			std::string data = ll.get(lineNum)->data;
-			std::cout << data << std::endl;
+			std::cin >> lineNum;
+			if (std::cin.fail){
+				std::cout << std::endl << "Invalid integer";
+			}
+			else {
+				std::string data = ll.get(lineNum)->data;
+				std::cout << data << std::endl;
+			}
 		}
 
 		else if (c == 'L')
@@ -91,10 +107,18 @@ int main(int argc, const char * argv[]) {
 			std::cout << std::endl << "Enter Num 1: ";
 			int line1;
 			std::cin >> line1;
+			if (std::cin.fail) {
+				std::cout << std::endl << "Invalid integer";
+			}
 			std::cout << std::endl << "Enter Num 2: ";
 			int line2;
 			std::cin >> line2;
 
+			if (std::cin.fail) {
+				std::cout << std::endl << "Invalid integer";
+			}
+			//make another if statement making sure both ints are valid indexes
+			//also make sure first int is smaller than second
 			while (line1 <= line2) {
 				try {
 					std::string data = ll.get(line1)->data;
@@ -115,7 +139,12 @@ int main(int argc, const char * argv[]) {
 			std::cout << std::endl << "line #";
 			int lineNum;
 			std::cin >> lineNum;
-			ll.replace(lineNum, NewLine);
+			if (std::cin.fail) {
+				std::cout << std::endl << "Invalid integer";
+			}
+			else {
+				ll.replace(lineNum, NewLine);
+			}
 
 		}
 
