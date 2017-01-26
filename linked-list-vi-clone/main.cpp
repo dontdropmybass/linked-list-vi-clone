@@ -19,15 +19,14 @@ int main(int argc, const char * argv[]) {
     }
     filename = argv[1];
     fileloader::loadFileToLinkedList(filename, &ll);
-    for (int i = 0; true; i++) {
         try {
-            std::string data = ll.get(i)->data;
-            std::cout << std::endl << i+1 << " | " << data;
+            std::string data = ll.get(1)->data;
+            std::cout << std::endl  << data;
         }
         catch (...) {
-            break;
+			return 0;
         }
-    }
+    
 	char c;
 	std::string line;
 
@@ -59,17 +58,45 @@ int main(int argc, const char * argv[]) {
 
 		else if (c == 'V')
 		{
-
+			for (int i = 0; true; i++) {
+				try {
+					std::string data = ll.get(i)->data;
+					std::cout << std::endl << i + 1 << " | " << data;
+				}
+				catch (...) {
+					break;
+				}
+			}
 		}
 
 		else if (c == 'G')
 		{
-
+			std::cout << std::endl << "Go to Line #";
+			std::string NewLine;
+			std::string data = ll.get(std::stoi(NewLine))->data;
+			std::cout << data << std::endl;
 		}
 
 		else if (c == 'L')
 		{
+			std::cout << std::endl << "Enter Num 1";
+			std::string line1;
+			std::cin >> line1;
+			std::cout << std::endl << "Enter Num 2";
+			std::string line2;
+			std::cin >> line2;
+			int intLine2 = std::stoi(line1);
+			int intLine1 = std::stoi(line1);
 
+			for (intLine1; intLine2; intLine1++) {
+				try {
+					std::string data = ll.get(intLine1)->data;
+					std::cout << std::endl << intLine1 + 1 << " | " << data;
+				}
+				catch (...) {
+					break;
+				}
+			}
 		}
 
 		else if (c == 'S')
