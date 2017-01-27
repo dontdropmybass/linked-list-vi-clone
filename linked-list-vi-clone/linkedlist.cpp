@@ -42,11 +42,23 @@ linkedlist::Node* linkedlist::get(int index) {
 void linkedlist::insert(int index, std::string data) {
     if (head==NULL) throw std::exception();
     Node* node = head;
-    for (int i = 0; i < index; i++) {
-        if (node->next==NULL) {
+    int i;
+    try {
+        for (i = 0; i < index; i++) {
+            if (node->next==NULL) {
+                throw std::exception();
+            }
+            node = node->next;
+        }
+    }
+    catch (...) {
+        if (i>=index-1) {
+            add(data);
+            return;
+        }
+        else {
             throw std::exception();
         }
-        node = node->next;
     }
     Node* newNode;
     newNode->data = data;

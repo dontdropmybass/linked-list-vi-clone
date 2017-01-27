@@ -24,7 +24,7 @@ int main(int argc, const char * argv[]) {
     
     try {
         std::string data = ll.get(0)->data;
-        /*std::cout << std::endl  << data;*/
+        std::cout << std::endl << data;
     }
     catch (...) {
         return 0;
@@ -62,7 +62,6 @@ int main(int argc, const char * argv[]) {
 			int lineNum;
 			std::cin >> lineNum;
 			ll.insert(lineNum, NewLine);
-
 		}
 
 		else if (c == 'V')
@@ -70,7 +69,7 @@ int main(int argc, const char * argv[]) {
 			for (int i = 0; true; i++) {
 				try {
 					std::string data = ll.get(i)->data;
-					std::cout << std::endl << i + 1 << " | " << data;
+					std::cout << std::endl << i << " | " << data;
 				}
 				catch (...) {
 					break;
@@ -98,7 +97,7 @@ int main(int argc, const char * argv[]) {
 			while (line1 <= line2) {
 				try {
 					std::string data = ll.get(line1)->data;
-					std::cout << std::endl << line1 + 1 << " | " << data;
+					std::cout << std::endl << line1 << " | " << data;
                     line1++;
 				}
 				catch (...) {
@@ -112,7 +111,7 @@ int main(int argc, const char * argv[]) {
 			std::cout << std::endl << "Enter New Line Content";
 			std::string NewLine;
             getline(std::cin, NewLine);
-			std::cout << std::endl << "line #";
+			std::cout << std::endl << "Line #: ";
 			int lineNum;
 			std::cin >> lineNum;
 			ll.replace(lineNum, NewLine);
