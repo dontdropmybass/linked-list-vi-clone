@@ -32,6 +32,8 @@ int main(int argc, const char * argv[]) {
     
 	char c;
 	std::string line;
+    
+    int currentLine = 0;
 
 	while (true) {
         std::cout << std::endl << "Command: ";
@@ -49,29 +51,72 @@ int main(int argc, const char * argv[]) {
 		
 		else if (c == 'D') {
             int lineNum;
+            int lineNum2;
             std::cout << std::endl << "Enter line number: ";
             std::cin >> lineNum;
 			if (std::cin.fail()) {
-				std::cout << std::endl << "Not a valid integer";
+                try {
+                    ll.remove(currentLine);
+                    std::cout << std::endl << "Deleted line number " << currentLine;
+                }
+                catch (...) {
+                    std::cout << std::endl << "Delete failed.";
+                }
 			}
 			else { //turn into else if to say if it isn't greater than the number of nodes
-				ll.remove(lineNum);
+                std::cout << std::endl << "Enter second line number, greater than the first: ";
+                std::cin >> lineNum2;
+                if (std::cin.fail()) {
+                    try {
+                        ll.remove(lineNum);
+                        std::cout << std::endl << "Deleted line number " << lineNum;
+                    }
+                    catch (...) {
+                        std::cout << std::endl << "Invalid line number.";
+                    }
+                }
+                else if (lineNum2 > lineNum) {
+                    try {
+                        ll.get(lineNum2);
+                        for (; lineNum <= lineNum2; lineNum++) {
+                            ll.remove(lineNum);
+                            std::cout << std::endl << "Deleted line number " << lineNum;
+                        }
+                    }
+                    catch (...) {
+                        std::cout << std::endl << "Invalid line number.";
+                    }
+                }
+                else {
+                    std::cout << std::endl << "Second number needs to be bigger than the first.";
+                }
 			}
 			
 		}
 		
 		else if (c == 'I') {
-			std::cout << std::endl << "Enter New Line Content:";
-			std::string NewLine;
-			getline(std::cin, NewLine);
-			std::cout << std::endl << "line # to insert before";
+			std::cout << std::endl << "Enter New Line Content: ";
+			std::string newLine;
+			getline(std::cin, newLine);
+			std::cout << std::endl << "Line # to insert before: ";
 			int lineNum;
 			std::cin >> lineNum;
 			if (std::cin.fail()) { //turn into else if to say if it isn't greater than the number of nodes
-				std::cout << std::endl << "Not a valid integer";
+                try {
+                    ll.insert(currentLine, newLine);
+                    std::cout << std::endl << "Inserted " << newLine << " before line " << ;
+                }
+                catch (...) {
+                    std::cout << std::endl << "Line does not exist.";
+                }
 			}
 			else {
-				ll.insert(lineNum, NewLine);
+                try {
+                    ll.insert(lineNum, newLine);
+                }
+                catch (...) {
+                    std::cout << std::endl << "Line does not exist.";
+                }
 			}
 		}
 
@@ -97,6 +142,7 @@ int main(int argc, const char * argv[]) {
 				std::cout << std::endl << "Invalid integer";
 			}
 			else {
+                currentLine = lineNum;
 				std::string data = ll.get(lineNum)->data;
 				std::cout << data << std::endl;
 			}
@@ -104,31 +150,13 @@ int main(int argc, const char * argv[]) {
 
 		else if (c == 'L')
 		{
-			std::cout << std::endl << "Enter Num 1: ";
-			int line1;
-			std::cin >> line1;
-			if (std::cin.fail()) {
-				std::cout << std::endl << "Invalid integer";
-			}
-			std::cout << std::endl << "Enter Num 2: ";
-			int line2;
-			std::cin >> line2;
-
-			if (std::cin.fail()) {
-				std::cout << std::endl << "Invalid integer";
-			}
-			//make another if statement making sure both ints are valid indexes
-			//also make sure first int is smaller than second
-			while (line1 <= line2) {
-				try {
-					std::string data = ll.get(line1)->data;
-					std::cout << std::endl << line1 << " | " << data;
-                    line1++;
-				}
-				catch (...) {
-					break;
-				}
-			}
+            try {
+                std::string data = ll.get(currentLine)->data;
+                std::cout << std::endl << data;
+            }
+            catch (...) {
+                std::cout << std::endl << "Failure of some sort.";
+            }
 		}
 
 		else if (c == 'S')
@@ -168,11 +196,11 @@ void help() {
         
         "\n\tH:\n\t\tDisplays help",
         
-        "\n\tI [linenum]:",
+        "\n\tI:",
         "\t\tInsert a new line, to be filled by the user.",
         "\t\tIf a linenumber is entered after, insert at that line, otherwise insert at the current line.",
         
-        "\n\tD [startline] [endline]:",
+        "\n\tD:",
         "\t\tIf two numbers are entered, delete lines between startline and endline.",
         "\t\tIf one line is entered, delete that line.",
         "\t\tOtherwise, delete current line.",
@@ -180,14 +208,14 @@ void help() {
         "\n\tV:",
         "\t\tDisplay all lines.",
         
-        "\n\tG [linenum]:",
+        "\n\tG:",
         "\t\tIf a linenum is specified, goto line specified and load into buffer.",
         "\t\tOtherwise goto the first line and load into buffer.",
         
         "\n\tL:",
         "\t\tDisplays current line of the buffer.",
         
-        "\n\tS [linenum]:",
+        "\n\tS:",
         "\t\tReplaces the specified line, or current line, with user-specified data,",
         "\t\tthen displays all lines.",
         
