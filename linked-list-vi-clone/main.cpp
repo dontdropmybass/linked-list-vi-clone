@@ -13,12 +13,20 @@ void help();
 int main(int argc, const char * argv[]) {
     linkedlist ll;
     std::string filename;
+    std::string savefilename;
     if (argc <= 1) {
         std::cout << "please enter a filename" << std::endl;
         return 1;
     }
-    filename = argv[1];
+    filename = argv[0];
     fileloader::loadFileToLinkedList(filename, &ll);
+    
+    if (argc == 2) {
+        savefilename = argv[1];
+    }
+    else {
+        savefilename = filename;
+    }
     
     try {
         std::string data = ll.get(0)->data;
@@ -96,9 +104,9 @@ int main(int argc, const char * argv[]) {
 			std::string newLine;
 			getline(std::cin, newLine);
 			std::cout << std::endl << "Line # to insert before: ";
-			int lineNum;
+            std::string lineNum;
 			std::cin >> lineNum;
-			if (std::cin.fail()) { //turn into else if to say if it isn't greater than the number of nodes
+			if (std::cin.fail() || lineNum == "") {
                 try {
                     ll.insert(currentLine, newLine);
                     std::cout << std::endl << "Inserted " << newLine << " before line " << currentLine;
@@ -109,7 +117,7 @@ int main(int argc, const char * argv[]) {
 			}
 			else {
                 try {
-                    ll.insert(lineNum, newLine);
+                    ll.insert(stoi(lineNum), newLine);
                     std::cout << std::endl << "Inserted " << newLine << " before line " << lineNum;
                 }
                 catch (...) {
@@ -159,7 +167,7 @@ int main(int argc, const char * argv[]) {
 
 		else if (c == 'S')
 		{
-			std::cout << std::endl << "Enter New Line Content";
+			std::cout << std::endl << "Enter New Line Content: ";
 			std::string NewLine;
             getline(std::cin, NewLine);
 			std::cout << std::endl << "Line #: ";
@@ -176,7 +184,7 @@ int main(int argc, const char * argv[]) {
 
 		else if (c == 'E')
 		{
-			fileloader::saveLinkedListToFile(&ll,filename);
+			fileloader::saveLinkedListToFile(&ll,savefilename);
 			return 0;
 		}
         
