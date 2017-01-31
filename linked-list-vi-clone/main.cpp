@@ -2,9 +2,6 @@
 //  main.cpp
 //  linked-list-vi-clone
 //
-//  Created by Alexander Cochrane on 2017-01-24.
-//  Copyright © 2017 Alexander Cochrane. All rights reserved.
-//
 
 #include "fileloader.hpp"
 #include "linkedlist.hpp"
@@ -12,6 +9,7 @@
 void help();
 
 //  Main function containing command loop.
+//  Takes a filename via command line.
 int main(int argc, const char * argv[]) {
     linkedlist ll;
     std::string filename;
@@ -24,7 +22,6 @@ int main(int argc, const char * argv[]) {
     
     try {
         std::string data = ll.get(0)->data;
-        /*std::cout << std::endl  << data;*/
     }
     catch (...) {
         return 0;
@@ -63,7 +60,7 @@ int main(int argc, const char * argv[]) {
                     std::cout << std::endl << "Delete failed.";
                 }
 			}
-			else { //turn into else if to say if it isn't greater than the number of nodes
+			else {
                 std::cout << std::endl << "Enter second line number, greater than the first: ";
                 std::cin >> lineNum2;
                 if (std::cin.fail()) {
@@ -104,7 +101,7 @@ int main(int argc, const char * argv[]) {
 			if (std::cin.fail()) { //turn into else if to say if it isn't greater than the number of nodes
                 try {
                     ll.insert(currentLine, newLine);
-                    std::cout << std::endl << "Inserted " << newLine << " before line " << ;
+                    std::cout << std::endl << "Inserted " << newLine << " before line " << currentLine;
                 }
                 catch (...) {
                     std::cout << std::endl << "Line does not exist.";
@@ -113,6 +110,7 @@ int main(int argc, const char * argv[]) {
 			else {
                 try {
                     ll.insert(lineNum, newLine);
+                    std::cout << std::endl << "Inserted " << newLine << " before line " << lineNum;
                 }
                 catch (...) {
                     std::cout << std::endl << "Line does not exist.";
@@ -183,13 +181,14 @@ int main(int argc, const char * argv[]) {
 		}
         
         else {
-            std::cout << std::endl << "Invalid command." << std::endl;
+            std::cout << std::endl << "Invalid command. Use `H` to shows a list of commands." << std::endl;
         }
 
     }
     return 0;
 }
 
+//  prints the help doc
 void help() {
     std::string a[] = {
         "COMMANDS:",

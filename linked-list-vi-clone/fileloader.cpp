@@ -2,13 +2,11 @@
 //  fileloader.cpp
 //  linked-list-vi-clone
 //
-//  Created by Alexander Cochrane on 2017-01-24.
-//  Copyright © 2017 Alexander Cochrane. All rights reserved.
-//
 
 #include "fileloader.hpp"
 
-// loads file to a string
+//  takes a filename, and a pointer to a linked list
+//  saves every line to a node in the linked list
 void fileloader::loadFileToLinkedList(const std::string filename, linkedlist* ll) {
     
     std::ifstream ifs;
@@ -32,7 +30,8 @@ void fileloader::loadFileToLinkedList(const std::string filename, linkedlist* ll
     ifs.close();
 }
 
-// saves file to string
+//  takes a pointer to a linked list, and a filename
+//  saves every node to the given file
 void fileloader::saveLinkedListToFile(linkedlist* ll, std::string filename) {
     std::ofstream ofs(filename, std::fstream::out | std::fstream::trunc);
     

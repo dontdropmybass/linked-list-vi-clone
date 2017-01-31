@@ -2,9 +2,6 @@
 //  linkedlist.hpp
 //  linked-list-vi-clone
 //
-//  Created by Alexander Cochrane on 2017-01-24.
-//  Copyright © 2017 Alexander Cochrane. All rights reserved.
-//
 
 #ifndef linkedlist_hpp
 #define linkedlist_hpp
