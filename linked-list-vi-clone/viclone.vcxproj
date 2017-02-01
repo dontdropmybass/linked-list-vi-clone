@@ -97,13 +97,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="FileHandler.cpp" />
     <ClCompile Include="fileloader.cpp" />
     <ClCompile Include="linkedlist.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FileHandler.h" />
     <ClInclude Include="fileloader.hpp" />
     <ClInclude Include="linkedlist.hpp" />
   </ItemGroup>

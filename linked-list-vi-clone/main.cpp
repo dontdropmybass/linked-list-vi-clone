@@ -6,14 +6,31 @@
 #include "fileloader.hpp"
 #include "linkedlist.hpp"
 
+std::regex inum("i[0-9]+");
+std::regex i("i");
+std::regex H("H");
+std::regex dnumnum("d[0-9]+-[0-9]+");
+std::regex dnum("d[0-9]+");
+std::regex d("d");
+std::regex v("v");
+std::regex g("g[0-9]+");
+std::regex l("l[0-9]+-[0-9]+");
+std::regex s("s");
+std::regex snum("s[0-9]+");
+std::regex e("e");
+std::regex q("q");
+std::regex replace1("[0-9]+-");
+std::regex replace2("-[0-9]+");
 void help();
 
 //  Main function containing command loop.
 //  Takes a filename via command line.
+
 int main(int argc, const char * argv[]) {
     linkedlist ll;
     std::string filename;
     std::string savefilename;
+
     if (argc <= 1) {
         std::cout << "please enter a filename" << std::endl;
         return 1;
@@ -35,165 +52,88 @@ int main(int argc, const char * argv[]) {
         return 0;
     }
     
-	char c;
+	char *c;
 	std::string line;
     
     int currentLine = 0;
 
 	while (true) {
-        std::cout << std::endl << "Command: ";
-        std::string command;
-        getline(std::cin,command);
-        c = command[0];
-        
-        if (c == 'H') {
-            help();
-        }
+		std::cout << std::endl << "Command: ";
+		std::string command;
+		getline(std::cin, command);
+		//get user input limited at 512 chars
+		std::cin.getline(c,512);
 
-		else if (c == 'Q') {
-			return 0;
-		}
-		
-		else if (c == 'D') {
-            int lineNum;
-            int lineNum2;
-            std::cout << std::endl << "Enter line number: ";
-            std::cin >> lineNum;
-			if (std::cin.fail()) {
-                try {
-                    ll.remove(currentLine);
-                    std::cout << std::endl << "Deleted line number " << currentLine;
-                }
-                catch (...) {
-                    std::cout << std::endl << "Delete failed.";
-                }
-			}
-			else {
-                std::cout << std::endl << "Enter second line number, greater than the first: ";
-                std::cin >> lineNum2;
-                if (std::cin.fail()) {
-                    try {
-                        ll.remove(lineNum);
-                        std::cout << std::endl << "Deleted line number " << lineNum;
-                    }
-                    catch (...) {
-                        std::cout << std::endl << "Invalid line number.";
-                    }
-                }
-                else if (lineNum2 > lineNum) {
-                    try {
-                        ll.get(lineNum2);
-                        for (; lineNum <= lineNum2; lineNum++) {
-                            ll.remove(lineNum);
-                            std::cout << std::endl << "Deleted line number " << lineNum;
-                        }
-                    }
-                    catch (...) {
-                        std::cout << std::endl << "Invalid line number.";
-                    }
-                }
-                else {
-                    std::cout << std::endl << "Second number needs to be bigger than the first.";
-                }
-			}
-			
-		}
-		
-		else if (c == 'I') {
-			std::cout << std::endl << "Enter New Line Content: ";
-			std::string newLine;
-			getline(std::cin, newLine);
-			std::cout << std::endl << "Line # to insert before: ";
-            std::string lineNum;
-			std::cin >> lineNum;
-			if (std::cin.fail() || lineNum == "") {
-                try {
-                    ll.insert(currentLine, newLine);
-                    std::cout << std::endl << "Inserted " << newLine << " before line " << currentLine;
-                }
-                catch (...) {
-                    std::cout << std::endl << "Line does not exist.";
-                }
-			}
-			else {
-                try {
-                    ll.insert(stoi(lineNum), newLine);
-                    std::cout << std::endl << "Inserted " << newLine << " before line " << lineNum;
-                }
-                catch (...) {
-                    std::cout << std::endl << "Line does not exist.";
-                }
-			}
+		if (regex_match(c,H)) {
+			help();
 		}
 
-		else if (c == 'V')
-		{
-			for (int i = 0; true; i++) {
-				try {
-					std::string data = ll.get(i)->data;
-					std::cout << std::endl << i << " | " << data;
-				}
-				catch (...) {
-					break;
-				}
-			}
+		if (regex_match(c, inum)) {
+			memmove(c, c + 1, strlen(c));
+			int line = atoi(c);
+			char *text = new char[256];
+			std::cout << "Input on line " << c << ":" << std::endl;
+			std::cin.clear();
+			std::cin.getline(text, 256);
+			ll.insert(line, text);
+		}//end if
+
+
+		 //Delete specific line
+		else if (regex_match(c, dnum)) {
+			std::cout << "Delete line " << c << std::endl;
+			memmove(c, c + 1, strlen(c));
+			ll.remove(atoi(c));
+		}//end else if
+
+		 //Select line as buffer
+		else if (regex_match(c, g)) {
+			memmove(c, c + 1, strlen(c));
+			std::cout << "Display line " << c << std::endl;
+			int line = atoi(c);
+			std::cout << "Line " << line << " = " << ll.get(line)->data << std::endl << std::endl;
+		}//end else if
+
+		 //Substitute line number
+		else if (regex_match(c, snum)) {
+			//use memmmove to delete first char
+			memmove(c, c + 1, strlen(c));
+			std::cout << "Substitute line " << c << ":" << std::endl;
+			int num = atoi(c);
+			char *text = new char[512];
+			std::cin.clear();
+			std::cin.getline(text, 512);
+			ll.replace(num, text);
+		}//end else if
+
+
+		 //Save and quit
+		else if (regex_match(c, e)) {
+			std::cout << "Save and quit" << std::endl;
+			fileloader::saveLinkedListToFile;
+			break;
+		}//end else if
+
+		 //Quit
+		else if (regex_match(c, q)) {
+			std::cout << "Quit without saving" << std::endl;
+			//Quit using terminate
+			break;
+		}//end else if
+
+
+		else if (regex_match(c, v)) {
+			//figure out how to show all lines
 		}
 
-		else if (c == 'G')
-		{
-			std::cout << std::endl << "Go to Line #";
-            int lineNum;
-			std::cin >> lineNum;
-			if (std::cin.fail()){
-				std::cout << std::endl << "Invalid integer";
-			}
-			else {
-                currentLine = lineNum;
-				std::string data = ll.get(lineNum)->data;
-				std::cout << data << std::endl;
-			}
-		}
 
-		else if (c == 'L')
-		{
-            try {
-                std::string data = ll.get(currentLine)->data;
-                std::cout << std::endl << data;
-            }
-            catch (...) {
-                std::cout << std::endl << "Failure of some sort.";
-            }
-		}
 
-		else if (c == 'S')
-		{
-			std::cout << std::endl << "Enter New Line Content: ";
-			std::string NewLine;
-            getline(std::cin, NewLine);
-			std::cout << std::endl << "Line #: ";
-			int lineNum;
-			std::cin >> lineNum;
-			if (std::cin.fail()) {
-				std::cout << std::endl << "Invalid integer";
-			}
-			else {
-				ll.replace(lineNum, NewLine);
-			}
+		else {
+			std::cout << "Nothing triggered" << std::endl;
+		}//end else
 
-		}
 
-		else if (c == 'E')
-		{
-			fileloader::saveLinkedListToFile(&ll,savefilename);
-			return 0;
-		}
-        
-        else {
-            std::cout << std::endl << "Invalid command. Use `H` to shows a list of commands." << std::endl;
-        }
-
-    }
-    return 0;
+	}
 }
 
 //  prints the help doc

@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FileHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="fileloader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -29,9 +26,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FileHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="fileloader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
