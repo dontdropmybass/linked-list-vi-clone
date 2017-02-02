@@ -9,9 +9,7 @@
 //  saves every line to a node in the linked list
 void fileloader::loadFileToLinkedList(const std::string filename, linkedlist* ll) {
     
-    std::ifstream ifs;
-    
-    ifs.open(filename, std::fstream::in);
+    std::ifstream ifs(filename);
     
     // if the file isn't open, the argument is invalid
     if (ifs.fail()) {
@@ -23,6 +21,7 @@ void fileloader::loadFileToLinkedList(const std::string filename, linkedlist* ll
         std::string temp;
         getline(ifs,temp);
         ll->add(temp);
+        std::cout << temp << std::endl;
         temp.clear();
     }
     

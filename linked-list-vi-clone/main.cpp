@@ -31,19 +31,20 @@ int main(int argc, const char * argv[]) {
     std::string filename;
     std::string savefilename;
 
-    if (argc < 1) {
+    if (argc <= 1) {
         std::cout << "please enter a filename" << std::endl;
         return 1;
     }
-    filename = argv[0];
+    filename = argv[1];
     fileloader::loadFileToLinkedList(filename, &ll);
     
-    if (argc == 2) {
-        savefilename = argv[1];
+    /*if (argc == 2) {
+        savefilename = argv[2];
     }
     else {
         savefilename = filename;
-    }
+    }*/
+    savefilename = filename;
     
     try {
         std::string data = ll.get(0)->data;
@@ -216,7 +217,7 @@ int main(int argc, const char * argv[]) {
             for (int i = 0; true; i++) {
                 try {
                     std::string line = ll.get(i)->data;
-                    std::cout << i << " | " << line;
+                    std::cout << i << " | " << line << std::endl;
                 }
                 catch (...) {
                     break;
