@@ -6,21 +6,21 @@
 #include "fileloader.hpp"
 #include "linkedlist.hpp"
 
-std::regex inum("i[0-9]+");
-std::regex i("i");
+std::regex Inum("I [0-9]+");
+std::regex I("I");
 std::regex H("H");
-std::regex dnumnum("d[0-9]+-[0-9]+");
-std::regex dnum("d[0-9]+");
-std::regex d("d");
-std::regex v("v");
-std::regex g("g[0-9]+");
-std::regex l("l[0-9]+-[0-9]+");
-std::regex s("s");
-std::regex snum("s[0-9]+");
-std::regex e("e");
-std::regex q("q");
+std::regex Dnumnum("D [0-9]+ [0-9]+");
+std::regex Dnum("D [0-9]+");
+std::regex D("D");
+std::regex V("V");
+std::regex Gnum("G [0-9]+");
+std::regex Lnumnum("L [0-9]+ [0-9]+");
+std::regex S("S");
+std::regex Snum("S [0-9]+");
+std::regex E("E");
+std::regex Q("Q");/*
 std::regex replace1("[0-9]+-");
-std::regex replace2("-[0-9]+");
+std::regex replace2("-[0-9]+");*/
 void help();
 
 //  Main function containing command loop.
@@ -31,7 +31,7 @@ int main(int argc, const char * argv[]) {
     std::string filename;
     std::string savefilename;
 
-    if (argc <= 1) {
+    if (argc < 1) {
         std::cout << "please enter a filename" << std::endl;
         return 1;
     }
@@ -52,87 +52,210 @@ int main(int argc, const char * argv[]) {
         return 0;
     }
     
-	char *c;
-	std::string line;
-    
     int currentLine = 0;
 
 	while (true) {
+        try {
 		std::cout << std::endl << "Command: ";
 		std::string command;
+        std::cin.clear();
 		getline(std::cin, command);
-		//get user input limited at 512 chars
-		std::cin.getline(c,512);
+        
+        // This thing tokenized the command so you can get the numbers from it
+        char * temp;
+        std::string array[3];
+        char * cmd = new char[command.size() + 1];
+        std::copy(command.begin(), command.end(), cmd);
+        cmd[command.size()] = '\0';
+        temp = std::strtok(cmd, " ");
+        int i = 0;
+        while (temp != NULL)
+        {
+            array[i] = temp;
+            temp = std::strtok(NULL, " ");
+        }
 
-		if (regex_match(c,H)) {
+		if (regex_match(command, H)) {
 			help();
 		}
 
-		if (regex_match(c, inum)) {
-			memmove(c, c + 1, strlen(c));
-			int line = atoi(c);
-			char *text = new char[256];
-			std::cout << "Input on line " << c << ":" << std::endl;
-			std::cin.clear();
-			std::cin.getline(text, 256);
-			ll.insert(line, text);
-		}//end if
+		else if (regex_match(command, Inum)) {
+			int line = stoi(array[1]);
+            try {
+                ll.get(line);
+                std::cout << "New line to insert on line " << line << ": " << std::endl;
+                std::cin.clear();
+                std::string newLine;
+                getline(std::cin, newLine);
+                ll.insert(line, newLine);
+            }
+            catch (...) {
+                std::cout << "Command failed." << std::endl;
+            }
+		}
+        
+        else if (regex_match(command, I)) {
+            int line = currentLine;
+            try {
+                ll.get(line);
+                std::cout << "New line to insert on line " << line << ": " << std::endl;
+                std::cin.clear();
+                std::string newLine;
+                getline(std::cin, newLine);
+                ll.insert(line, newLine);
+            }
+            catch (...) {
+                std::cout << "Command failed." << std::endl;
+            }
+        }
+        
+        else if (regex_match(command, Dnumnum)) {
+            int line1 = stoi(array[1]);
+            int line2 = stoi(array[2]);
+            if (line1 > line2) {
+                try {
+                    ll.get(line1);
+                    for (int i = line2; i <= line1; i++) {
+                        ll.remove(line2);
+                    }
+                    std::cout << "Removed lines between " << line2 << " and " << line1 << std::endl;
+                }
+                catch (...) {
+                    std::cout << "Command failed." << std::endl;
+                }
+            }
+            else {
+                try {
+                    ll.get(line2);
+                    for (int i = line1; i <= line2; i++) {
+                        ll.remove(line1);
+                    }
+                    std::cout << "Removed lines between " << line1 << " and " << line2 << std::endl;
+                }
+                catch (...) {
+                    std::cout << "Command failed." << std::endl;
+                }
+            }
+        }
 
-
-		 //Delete specific line
-		else if (regex_match(c, dnum)) {
-			std::cout << "Delete line " << c << std::endl;
-			memmove(c, c + 1, strlen(c));
-			ll.remove(atoi(c));
-		}//end else if
-
-		 //Select line as buffer
-		else if (regex_match(c, g)) {
-			memmove(c, c + 1, strlen(c));
-			std::cout << "Display line " << c << std::endl;
-			int line = atoi(c);
-			std::cout << "Line " << line << " = " << ll.get(line)->data << std::endl << std::endl;
-		}//end else if
-
-		 //Substitute line number
-		else if (regex_match(c, snum)) {
-			//use memmmove to delete first char
-			memmove(c, c + 1, strlen(c));
-			std::cout << "Substitute line " << c << ":" << std::endl;
-			int num = atoi(c);
-			char *text = new char[512];
-			std::cin.clear();
-			std::cin.getline(text, 512);
-			ll.replace(num, text);
-		}//end else if
-
-
-		 //Save and quit
-		else if (regex_match(c, e)) {
-			std::cout << "Save and quit" << std::endl;
-			fileloader::saveLinkedListToFile;
-			break;
-		}//end else if
-
-		 //Quit
-		else if (regex_match(c, q)) {
-			std::cout << "Quit without saving" << std::endl;
-			//Quit using terminate
-			break;
-		}//end else if
-
-
-		else if (regex_match(c, v)) {
-			//figure out how to show all lines
+		else if (regex_match(command, Dnum)) {
+            int line = stoi(array[1]);
+            try {
+                ll.remove(line);
+                std::cout << "Deleted line " << line << std::endl;
+            }
+            catch (...) {
+                std::cout << "Command failed." << std::endl;
+            }
+		}
+        
+        else if (regex_match(command, D)) {
+            int line = currentLine;
+            try {
+                ll.remove(line);
+                std::cout << "Deleted line " << line << std::endl;
+            }
+            catch (...) {
+                std::cout << "Command failed." << std::endl;
+            }
+        }
+        
+		else if (regex_match(command, Gnum)) {
+            currentLine = stoi(array[1]);
+            try {
+                std::cout << "Line " << currentLine << " | " << ll.get(currentLine)->data << std::endl;
+            }
+            catch (...) {
+                std::cout << "Command failed." << std::endl;
+            }
+		}
+        
+		else if (regex_match(command, Snum)) {
+            try {
+                int line = stoi(array[1]);
+                ll.get(line);
+                std::cout << "Enter text to replace line " << line << ": " << std::endl;
+                std::string newLine;
+                std::cin.clear();
+                getline(std::cin, newLine);
+                ll.replace(line, newLine);
+            }
+            catch (...) {
+                std::cout << "Command failed." << std::endl;
+            }
+		}
+        
+        else if (regex_match(command, S)) {
+            try {
+                int line = currentLine;
+                ll.get(line);
+                std::cout << "Enter text to replace line " << line << ": " << std::endl;
+                std::string newLine;
+                std::cin.clear();
+                getline(std::cin, newLine);
+                ll.replace(line, newLine);
+            }
+            catch (...) {
+                std::cout << "Command failed." << std::endl;
+            }
+        }
+        
+		else if (regex_match(command, E)) {
+			std::cout << "Save and quit." << std::endl;
+			fileloader::saveLinkedListToFile(&ll, savefilename);
+            return 0;
+        }
+        
+		else if (regex_match(command, Q)) {
+			std::cout << "Quit without saving." << std::endl;
+            return 0;
 		}
 
 
+        else if (regex_match(command, V)) {
+            for (int i = 0; true; i++) {
+                try {
+                    std::string line = ll.get(i)->data;
+                    std::cout << i << " | " << line;
+                }
+                catch (...) {
+                    break;
+                }
+            }
+		}
+
+        else if (regex_match(command, Lnumnum)) {
+            try {
+                int line1 = stoi(array[1]);
+                int line2 = stoi(array[2]);
+                int first, second;
+                if (line1 > line2) {
+                    first = line2;
+                    second = line1;
+                }
+                else {
+                    first = line1;
+                    second = line2;
+                }
+                ll.get(second);
+                for (int i = first; i < second; i++) {
+                    std::string line = ll.get(i)->data;
+                    std::cout << i << " | " << line;
+                }
+            }
+            catch (...) {
+                std::cout << "Command failed." << std::endl;
+            }
+        }
 
 		else {
-			std::cout << "Nothing triggered" << std::endl;
-		}//end else
-
-
+			std::cout << "Invalid command." << std::endl;
+		}
+            
+        }
+        catch (...) {
+            std::cout << "Invalid command." << std::endl;
+        }
 	}
 }
 
@@ -156,11 +279,11 @@ void help() {
         "\t\tDisplay all lines.",
         
         "\n\tG:",
+        "\t\tDisplays current line of the buffer.",
         "\t\tIf a linenum is specified, goto line specified and load into buffer.",
-        "\t\tOtherwise goto the first line and load into buffer.",
         
         "\n\tL:",
-        "\t\tDisplays current line of the buffer.",
+        "\t\tDisplays lines of the buffer between two given line numbers.",
         
         "\n\tS:",
         "\t\tReplaces the specified line, or current line, with user-specified data,",
