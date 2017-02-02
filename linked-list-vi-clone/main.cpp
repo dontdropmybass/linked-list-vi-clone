@@ -5,22 +5,8 @@
 
 #include "fileloader.hpp"
 #include "linkedlist.hpp"
+#include "regexmatches.h"
 
-std::regex Inum("I [0-9]+");
-std::regex I("I");
-std::regex H("H");
-std::regex Dnumnum("D [0-9]+ [0-9]+");
-std::regex Dnum("D [0-9]+");
-std::regex D("D");
-std::regex V("V");
-std::regex Gnum("G [0-9]+");
-std::regex Lnumnum("L [0-9]+ [0-9]+");
-std::regex S("S");
-std::regex Snum("S [0-9]+");
-std::regex E("E");
-std::regex Q("Q");/*
-std::regex replace1("[0-9]+-");
-std::regex replace2("-[0-9]+");*/
 void help();
 
 //  Main function containing command loop.
@@ -38,12 +24,12 @@ int main(int argc, const char * argv[]) {
     filename = argv[1];
     fileloader::loadFileToLinkedList(filename, &ll);
     
-    /*if (argc == 2) {
+    if (argc > 2) {
         savefilename = argv[2];
     }
     else {
         savefilename = filename;
-    }*/
+    }
     savefilename = filename;
     
     try {
@@ -61,6 +47,7 @@ int main(int argc, const char * argv[]) {
 		std::string command;
         std::cin.clear();
 		getline(std::cin, command);
+            std::cout << command << std::endl;
         
         // This thing tokenized the command so you can get the numbers from it
         char * temp;
@@ -74,6 +61,7 @@ int main(int argc, const char * argv[]) {
         {
             array[i] = temp;
             temp = std::strtok(NULL, " ");
+            i++;
         }
 
 		if (regex_match(command, H)) {

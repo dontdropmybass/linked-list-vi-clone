@@ -25,6 +25,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FA0CC3D21E42CDED0095B3E6 /* regexmatches.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = regexmatches.h; sourceTree = "<group>"; };
 		FAAB1A2B1E379F0400CCD84E /* linked-list-vi-clone */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "linked-list-vi-clone"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAAB1A2E1E379F0400CCD84E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		FAAB1A351E37AB0D00CCD84E /* linkedlist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = linkedlist.cpp; sourceTree = "<group>"; };
@@ -68,6 +69,7 @@
 				FAAB1A391E380B8C00CCD84E /* fileloader.hpp */,
 				FAAB1A351E37AB0D00CCD84E /* linkedlist.cpp */,
 				FAAB1A361E37AB0D00CCD84E /* linkedlist.hpp */,
+				FA0CC3D21E42CDED0095B3E6 /* regexmatches.h */,
 			);
 			path = "linked-list-vi-clone";
 			sourceTree = "<group>";
@@ -258,6 +260,7 @@
 				FAAB1A341E379F0400CCD84E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
