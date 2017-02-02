@@ -23,7 +23,6 @@ void linkedlist::add(std::string data) {
         Node* newNode = new Node(data);
         node->next = newNode;
     }
-    
 }
 
 //  find a node in the linked list
@@ -51,6 +50,10 @@ linkedlist::Node* linkedlist::get(int index) {
 //  throws exception if node does not exist
 void linkedlist::insert(int index, std::string data) {
     if (head==NULL || index < 0) throw std::exception();
+    if (index == 0) {
+        insertHead(data);
+        return;
+    }
     Node* node = head;
     int i;
     try {
@@ -77,6 +80,17 @@ void linkedlist::insert(int index, std::string data) {
     }
     
     node->next = newNode;
+}
+
+void linkedlist::insertHead(std::string data) {
+    if (head==NULL) {
+        head = new Node(data);
+    }
+    else {
+        Node* newNode = new Node(data);
+        newNode->next = head;
+        head = newNode;
+    }
 }
 
 //  removes a node from the linked list

@@ -23,6 +23,7 @@ public:
     void remove(int index);
     void insert(int index, std::string data);
     void removeHead();
+    void insertHead(std::string data);
 	void replace(int index, std::string data);
     Node* get(int index);
 };
