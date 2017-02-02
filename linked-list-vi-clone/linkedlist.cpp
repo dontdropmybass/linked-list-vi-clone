@@ -70,8 +70,7 @@ void linkedlist::insert(int index, std::string data) {
             throw std::exception();
         }
     }
-    Node* newNode;
-    newNode->data = data;
+    Node* newNode = new Node(data);
     
     if (node->next!=NULL) {
         newNode->next = node->next;
