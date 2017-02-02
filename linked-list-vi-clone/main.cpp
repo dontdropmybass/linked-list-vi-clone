@@ -228,9 +228,9 @@ int main(int argc, const char * argv[]) {
                     second = line2;
                 }
                 ll.get(second);
-                for (int i = first; i < second; i++) {
+                for (int i = first; i <= second; i++) {
                     std::string line = ll.get(i)->data;
-                    std::cout << i << " | " << line;
+                    std::cout << i << " | " << line << std::endl;
                 }
             }
             catch (...) {
