@@ -67,34 +67,35 @@ int main(int argc, const char * argv[]) {
 		if (regex_match(command, H)) {
 			help();
 		}
-
-		else if (regex_match(command, Inum)) {
-			int line = stoi(array[1]);
-            try {
-                ll.get(line);
-                std::cout << "New line to insert on line " << line << ": " << std::endl;
-                std::cin.clear();
-                std::string newLine;
-                getline(std::cin, newLine);
-                ll.insert(line, newLine);
-            }
-            catch (...) {
-                std::cout << "Command failed." << std::endl;
-            }
-		}
         
-        else if (regex_match(command, I)) {
-            int line = currentLine;
-            try {
-                ll.get(line);
-                std::cout << "New line to insert on line " << line << ": " << std::endl;
-                std::cin.clear();
-                std::string newLine;
-                getline(std::cin, newLine);
-                ll.insert(line, newLine);
+        else if (array[0]=="I") {
+            if (array[1]!="") {
+                int line = stoi(array[1]);
+                try {
+                    ll.get(line);
+                    std::cout << "New line to insert on line " << line << ": " << std::endl;
+                    std::cin.clear();
+                    std::string newLine;
+                    getline(std::cin, newLine);
+                    ll.insert(line, newLine);
+                }
+                catch (...) {
+                    std::cout << "Command failed." << std::endl;
+                }
             }
-            catch (...) {
-                std::cout << "Command failed." << std::endl;
+            else {
+                int line = currentLine;
+                try {
+                    ll.get(line);
+                    std::cout << "New line to insert on line " << line << ": " << std::endl;
+                    std::cin.clear();
+                    std::string newLine;
+                    getline(std::cin, newLine);
+                    ll.insert(line, newLine);
+                }
+                catch (...) {
+                    std::cout << "Command failed." << std::endl;
+                }
             }
         }
         
